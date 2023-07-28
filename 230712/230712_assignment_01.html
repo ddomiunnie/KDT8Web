@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      //1~100까지 출력
+
+      var numbers = [];
+
+      for (var i = 1; i <= 100; i++) {
+        numbers.push(i);
+      }
+
+      console.log(numbers);
+      //for문
+      let sum = 0;
+      for (let i = 1; i <= 100; i++) {
+        sum += i;
+      }
+      console.log("for문 :", sum);
+
+      //for each문
+      var numbers = [];
+      var sum2 = 0;
+
+      for (var i = 1; i <= 100; i++) {
+        numbers.push(i);
+      }
+
+      numbers.forEach(function (number) {
+        sum2 += number;
+      });
+
+      console.log("for each문 : " + sum2);
+
+      //for of문
+      var numbers = [];
+      var sum3 = 0;
+
+      for (var i = 1; i <= 100; i++) {
+        numbers.push(i);
+      }
+
+      for (var number of numbers) {
+        sum3 += number;
+      }
+
+      console.log("for of문 : " + sum3);
+    </script>
+  </head>
+  <body></body>
+</html>

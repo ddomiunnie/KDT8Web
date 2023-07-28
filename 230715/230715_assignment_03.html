@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .container {
+        background-color: white;
+      }
+
+      .row {
+        display: flex;
+        margin: 10px;
+      }
+
+      .square {
+        width: 100px;
+        height: 100px;
+        background-color: black;
+        margin: 10px;
+      }
+
+      @media screen and (max-width: 700px) {
+        .container {
+          background-color: white;
+        }
+
+        .row {
+          flex-direction: column;
+        }
+
+        .square {
+          width: 100px;
+          height: 100px;
+          background-color: skyblue;
+          margin: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+      </div>
+    </div>
+  </body>
+</html>
