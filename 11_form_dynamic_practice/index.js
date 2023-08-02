@@ -11,9 +11,30 @@ app.set('views', './views');
 
 //router
 app.get('/', (req, res) => {
+  res.render('index');
+});
+//get실습
+app.get('/axiosGet', (req, res) => {
   res.render('get');
 });
-
+app.get('/resultGet', (req, res) => {
+  console.log(req.query);
+  res.send({ result: true, data: req.query });
+});
+//post 실습
+app.get('/axiosPost', (req, res) => {
+  res.render('post');
+});
+app.post('/resultPost', (req, res) => {
+  console.log(req.body);
+  const id = 'kdt8';
+  const pw = '1234';
+  if (id === req.body.username && pw === req.body.password) {
+    res.send({ result: true, userInfo: req.body });
+  } else {
+    res.send({ result: false });
+  }
+});
 //axios
 app.get('/axios', (req, res) => {
   console.log('back', req.query);
@@ -23,6 +44,8 @@ app.post('/axios', (req, res) => {
   console.log('back', req.body);
   res.send(req.body);
 });
+
+//server start
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
 });

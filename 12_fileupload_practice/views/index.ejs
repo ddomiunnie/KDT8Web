@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>회원 가입 실습</h1>
+    <form action="/upload/fields" method="post" enctype="multipart/form-data">
+      <label for="username">아이디 : </label>
+      <input type="text" id="username" required />
+      <br />
+      <label for="password">패스워드 : </label>
+      <input type="password" id="password" required />
+      <br />
+      <label for="name">이름 : </label>
+      <input type="text" id="name" />
+      <br />
+      <label for="age">나이 : </label>
+      <input type="text" id="age" /> <br />
+      <label for="image">프로필 사진 : </label>
+      <input type="file" name="dynamic-userfile" id="dynamic-userfile" /><br />
+      <button type="button" onclick="resetFields()">리셋</button>
+      <button type="button" onclick="fileupload()">회원가입</button>
+    </form>
+
+    <br />
+    <div class="result"></div>
+    <script>
+      //리셋 버튼
+      function resetFields() {
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('name').value = '';
+        document.getElementById('age').value = '';
+        const fileInput = document.querySelector('input[type="file"]');
+        fileInput.value = '';
+        const resultBox = document.querySelector('.result');
+        resultBox.innerHTML = '';
+      }
+
+      const resultBox = document.querySelector('.result');
+      function fileupload() {
+        const file = document.getElementById('dynamic-userfile');
+        console.log(file.files[0]);
+        const formData = new FormData();
+        formData.append('dynamic-userfile', file.files[0]);
+
+        axios({
+          method: 'POST',
+          url: '/dynamicFile',
+          data: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }).then((res) => {
+          console.log('res', res);
+          resultBox.innerHTML = `<div><img src=${res.data.path}></div>`;
+        });
+      }
+    </script>
+  </body>
+</html>

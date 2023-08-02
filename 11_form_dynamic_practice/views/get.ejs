@@ -8,16 +8,16 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>실습1. axios get 회원가입</h1>
-    <form name="register">
+    <h1>AXIOS GET 실습</h1>
+    <form name="register" id="register">
       <label for="name">이름</label>
       <input type="text" id="username" name="username" />
       <br />
       <fieldset>
         <legend>성별</legend>
-        <input type="radio" name="gender" id="male" value="male" />
+        <input type="radio" name="gender" id="male" value="남자" />
         <label for="male">남자</label>
-        <input type="radio" name="gender" id="female" value="female" />
+        <input type="radio" name="gender" id="female" value="여자" />
         <label for="female">여자</label>
       </fieldset>
       <br />
@@ -46,49 +46,52 @@
       <fieldset>
         <legend>관심사</legend>
         <!-- checkbox는 name이 같아야한다 -->
-        <input type="checkbox" name="hobby" id="travel" value="travel" />
+        <input type="checkbox" name="hobby" id="travel" value="여행" />
         <label for="travel">여행</label>
-        <input type="checkbox" name="hobby" id="fashion" value="fashion" />
+        <input type="checkbox" name="hobby" id="fashion" value="패션" />
         <label for="fashion">패션</label>
-        <input type="checkbox" name="hobby" id="food" value="food" />
+        <input type="checkbox" name="hobby" id="food" value="음식" />
         <label for="food">음식</label>
       </fieldset>
       <br />
-      <button type="button" onclick="axiosGet()">회원가입</button>
+      <button type="button" onclick="getRegister()">회원가입</button>
     </form>
+    <br />
+    <br />
+    <a href="/">홈으로 이동</a>
+    <br />
     <div class="result"></div>
     <script>
       const resultBox = document.querySelector('.result');
-      function axiosGet() {
-        console.log('axios get');
+      function getRegister() {
+        console.log('get register');
         const form = document.forms['register'];
+        const formId = document.getElementById('register');
 
-        // 선택된 체크박스들의 값을 배열로 가져오기
-        const selectedHobbies = [];
-        const checkboxes = form.querySelectorAll('input[name="hobby"]');
-        checkboxes.forEach((checkbox) => {
-          if (checkbox.checked) {
-            selectedHobbies.push(checkbox.value);
-          }
+        const hobby = [];
+        const checked = formId.querySelectorAll(
+          'input[type="checkbox"]:checked'
+        );
+        checked.forEach((elem) => {
+          hobby.push(elem.value);
         });
-
         const data = {
-          name: form.username.value,
+          username: form.username.value,
           gender: form.gender.value,
           birthYear: form.birthYear.value,
           birthMonth: form.birthMonth.value,
           birthDay: form.birthDay.value,
-          hobby: selectedHobbies,
+          hobby,
         };
+
+        // console.log(data);
         axios({
           method: 'GET',
-          // url: '/axios?name=${form.name.value}&gender=${form.gender.value}'
-          url: '/axios',
+          url: '/resultGet',
           params: data,
         }).then((res) => {
-          console.log(res);
-          resultBox.textContent = `GET /axios 요청 완료! ${res.data.name}님은 ${res.data.gender}이시죠? ${res.data.birthYear}년 ${res.data.birthMonth}월 ${res.data.birthDay}일에 태어나시고 ${res.data.hobby}를 좋아하시네요! `;
-          resultBox.style.color = 'green';
+          console.log('res', res);
+          resultBox.textContent = `${res.data.data.username}님 환영합니다. 가입이 완료되었습니다.`;
         });
       }
     </script>
