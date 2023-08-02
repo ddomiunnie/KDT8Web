@@ -31,6 +31,11 @@ const uploadDetail = multer({
 app.get('/', (req, res) => {
   res.render('index');
 });
+app.post('/postResult', uploadDetail.single('dynamic-userfile'), (req, res) => {
+  const userInfo = req.body;
+  const file = req.file;
+  res.render('result', { file: req.file });
+});
 //동적
 app.post(
   '/dynamicFile',
