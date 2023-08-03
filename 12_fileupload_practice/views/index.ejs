@@ -8,21 +8,21 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>회원 가입 실습</h1>
-    <form action="/postResult" method="post" enctype="multipart/form-data">
-      <label for="username">아이디 : </label>
-      <input type="text" id="username" required />
+    <h1>파일 업로드 실습</h1>
+    <form action="/result" method="post" enctype="multipart/form-data">
+      <label for="userId">아이디 : </label>
+      <input type="text" name="userId" id="userId" />
       <br />
       <label for="password">패스워드 : </label>
-      <input type="password" id="password" required />
+      <input type="password" name="pw" id="pw" />
       <br />
-      <label for="name">이름 : </label>
-      <input type="text" id="name" />
+      <label for="username">이름 : </label>
+      <input type="text" name="username" id="name" />
       <br />
       <label for="age">나이 : </label>
-      <input type="text" id="age" /> <br />
-      <label for="image">프로필 사진 : </label>
-      <input type="file" name="dynamic-userfile" id="dynamic-userfile" /><br />
+      <input type="number" name="age" id="age" /> <br />
+      <label for="profile">프로필 사진 : </label>
+      <input type="file" name="profile" id="profile" /><br />
       <button type="button" onclick="resetFields()">리셋</button>
       <button type="submit" onclick="fileupload()">회원가입</button>
     </form>
