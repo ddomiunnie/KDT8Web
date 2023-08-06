@@ -15,3 +15,10 @@ exports.getVisitors = (req, res) => {
     res.render('visitor', { data: result });
   });
 };
+
+//등록
+exports.post_comment = (req, res) => {
+  Visitor.insert(req.body.name, req.body.comment, function (result) {
+    res.send({ id: result });
+  });
+};

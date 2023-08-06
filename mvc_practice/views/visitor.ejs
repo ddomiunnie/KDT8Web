@@ -10,7 +10,7 @@
       <legend>방명록 등록</legend>
       <input type="text" placeholder="사용자 이름" /><br />
       <input type="text" placeholder="방명록" /><br />
-      <button type="button">등록</button>
+      <button type="button" onclick="writeComment()">등록</button>
     </fieldset>
     <br />
     <br />
@@ -38,5 +38,26 @@
     </table>
     <br />
     <a href="/">HOME</a>
+    <script>
+      //등록
+      function writeComment() {
+        var form=document.getElementById('form_comment');
+        axios({
+          method: 'post',
+          url: 'http://localhost:8000/visitor/write',
+          data: {
+            name: form.name.value,
+            comment: form.comment.value
+          }
+        }). then( (response)=> {return response.data})
+        .then((data) => {  let html = "<tr id='tr_" + data.id + "'><td>" + data.id + "</td><td>" + form.name.value + "</td><td>" + form.comment.value + "</td>" + 
+                        "<td><button type='button' onclick='editComment(" + data.id + ");'>수정</button></td>" +
+                        "<td><button type='button' onclick='deleteComment(" + data.id + ");'>삭제</button></td></tr>";
+                   
+                        $("table").append(html);
+
+        })
+      }
+    </script>
   </body>
 </html>

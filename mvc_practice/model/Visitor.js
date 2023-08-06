@@ -14,6 +14,14 @@
 //   ];
 // };
 
+const mysql = require('mysql');
+const conn = mysql.createConnection({
+  host: 'localhost',
+  user: 'user',
+  password: '1234',
+  database: 'kdt8',
+});
+
 // mysql 연결 후
 exports.getVisitors = (callback) => {
   const sql = 'SELECT * FROM visitor;';
@@ -23,11 +31,18 @@ exports.getVisitors = (callback) => {
     callback(rows);
   });
 };
+//등록
+exports.insert = (name, comment, callback) => {
+  var sql =
+    "INSERT INTO visitor (name, comment) VALUES ('" +
+    name +
+    "', '" +
+    comment +
+    "');";
+  conn.query(sql, (err, rows) => {
+    if (err) throw err;
+    console.log(rows);
 
-const mysql = require('mysql');
-const conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'user',
-  password: '1234',
-  database: 'kdt8',
-});
+    callbackb(rows.insertId);
+  });
+};
