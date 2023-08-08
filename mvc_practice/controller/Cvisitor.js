@@ -1,24 +1,37 @@
-const Visitor = require('../model/Visitor');
+const Visitor = require('../model/MVisitor');
 
-exports.main = (req, res) => {
-  res.render('index');
-};
-
+//전체 방명록 조회
 exports.getVisitors = (req, res) => {
-  // console.log(Visitor.getVisitors());
-  // res.render('visitor', { data: Visitor.getVisitors() });
-
-  // mysql 연결 후
   Visitor.getVisitors((result) => {
-    console.log('Cvisitor : ', result);
-    // [ {}, {}, {}]
     res.render('visitor', { data: result });
   });
 };
-
-//등록
-exports.post_comment = (req, res) => {
-  Visitor.insert(req.body.name, req.body.comment, function (result) {
-    res.send({ id: result });
+//방명록 하나 조회
+exports.getVisitor = (req, res) => {
+  Visitor.getVisitor(req.query.id, (result) => {
+    res.render('visitor', { data: result });
+  });
+};
+//방명록 하나 추가
+exports.postVisitor = (req, res) => {
+  Visitor.postVisitor(req.body, (result) => {
+    res.send({
+      result: true,
+      id: result.insertId,
+      name: req.body.name,
+      comment: req.body.comment,
+    });
+  });
+};
+//방명록 하나 수정
+exports.patchVisitor = (req, res) => {
+  Visitor.patchVisitor(req.body, () => {
+    res.send({ result: true });
+  });
+};
+//방명록 하나 삭제
+exports.deleteVisitor = (req, res) => {
+  Visitor.deleteVisitor(req.body, () => {
+    res.send({ result: true });
   });
 };
