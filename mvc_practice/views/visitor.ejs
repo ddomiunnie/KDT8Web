@@ -13,7 +13,9 @@
         <legend>방명록 등록</legend>
         <input type="text" name="name" placeholder="사용자 이름" /><br />
         <input type="text" name="comment" placeholder="방명록" /><br />
-        <button type="button" onclick="registerComment()">등록</button>
+        <button type="button" id="registerButton" onclick="registerComment()">
+          등록
+        </button>
       </fieldset>
     </form>
     <br />
@@ -31,7 +33,9 @@
       <tbody>
         <% for(let i=0; i < data.length; i++) { %>
         <tr id="tr_<%= data[i].id %>">
-          <td><a href="/visitor/get?id=<%= data[i].id %>"></a></td>
+          <td>
+            <a href="/visitor/get?id=<%= data[i].id %>"><%= data[i].id %></a>
+          </td>
           <td><%= data[i].name %></td>
           <td><%= data[i].comment %></td>
           <td>
@@ -52,9 +56,11 @@
     <a href="/">HOME</a>
     <script>
       const body = document.querySelector('tbody');
-      //등록
+      const form = document.forms['visitor-form'];
+      const registerButton = document.getElementById('registerButton');
+
+      // 등록
       function registerComment() {
-        const form = document.forms['visitor-form'];
         axios({
           method: 'POST',
           url: '/visitor/write',
@@ -64,31 +70,64 @@
           },
         }).then((res) => {
           console.log('res', res);
-          const html = `
-          <tr>
-            <td>${res.data.id}</td>
-            <td>${res.data.name}</td>
-            <td>${res.data.comment}</td>
-            <td></td>
-            <td></td>
-          </tr>`;
-          body.insertAdjacentHTML('beforeend', html);
+
+          const newRow = `
+            <tr id="tr_${res.data.id}">
+              <td><a href="/visitor/get?id=${res.data.id}">${res.data.id}</a></td>
+              <td>${res.data.name}</td>
+              <td>${res.data.comment}</td>
+              <td>
+                <button type="button" onclick="editVisitor('${res.data.id}')">
+                  수정
+                </button>
+              </td>
+              <td>
+                <button type="button" onclick="deleteVisitor('${res.data.id}')">
+                  삭제
+                </button>
+              </td>
+            </tr>`;
+          body.insertAdjacentHTML('beforeend', newRow);
+          form.reset(); // 폼 초기화
         });
       }
 
       function editVisitor(id) {
-        const form = document.forms['visitor-form'];
-        axios({
-          method: 'PATCH',
-          url: '/visitor/edit',
-          data: {
-            id: Number(id),
-            name: form.name.value,
-            comment: form.comment.value,
-          },
-        }).then((res) => {
-          console.log('res', res);
-        });
+        const row = document.getElementById(`tr_${id}`);
+        const editButton = row.querySelector('button[onclick*="editVisitor"]');
+        const nameCell = row.querySelector('td:nth-child(2)').textContent;
+        const commentCell = row.querySelector('td:nth-child(3)').textContent;
+
+        form.name.value = nameCell;
+        form.comment.value = commentCell;
+        registerButton.innerText = '수정하기';
+
+        registerButton.onclick = function () {
+          if (form.name.value === '' || form.comment.value === '') {
+            alert('이름과 방명록을 모두 입력하세요.');
+            return;
+          }
+
+          axios({
+            method: 'PATCH',
+            url: '/visitor/edit',
+            data: {
+              id: Number(id),
+              name: form.name.value,
+              comment: form.comment.value,
+            },
+          }).then((res) => {
+            console.log('res', res);
+
+            row.querySelector('td:nth-child(2)').textContent = form.name.value;
+            row.querySelector('td:nth-child(3)').textContent =
+              form.comment.value;
+
+            form.reset();
+            registerButton.innerText = '등록';
+            registerButton.onclick = registerComment;
+          });
+        };
       }
 
       function deleteVisitor(id) {
