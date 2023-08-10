@@ -18,12 +18,12 @@ const Visitor = function (sequelize, DataTypes) {
       comment: {
         type: DataTypes.TEXT('medium'),
       },
-    },
-    {
-      tableNmae: 'visitor',
-      freezeTableName: true,
-      timestamps: false,
     }
+    // {
+    //   tableNmae: 'visitor',
+    //   freezeTableName: true,
+    //   timestamps: false,
+    // }
   );
   return model;
 };
