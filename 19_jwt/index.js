@@ -24,6 +24,7 @@ app.post('/verify', (req, res) => {
         return res
           .status(403)
           .send({ result: false, message: '검증에 실패하였습니다' });
+        console.log(err);
       }
       res.send({ result: true, user: decoded });
     });
