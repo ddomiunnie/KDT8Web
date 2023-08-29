@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Document</title>
+    <style>
+      #space {
+        background-color: skyblue;
+        color: black;
+        width: 80vw;
+        height: 80vh;
+      }
+      .myMsg {
+        background-color: yellow;
+        float: right; /* 오른쪽으로 플로팅 */
+        clear: both; /* 다음 요소로 넘어갈 때, 정렬을 초기화 */
+        height: fit-content;
+        text-align: right;
+        margin-right: 10px;
+        margin-bottom: 5px;
+      }
+
+      .anotherMsg {
+        background-color: white;
+        float: left; /* 왼쪽으로 플로팅 */
+        clear: both; /* 다음 요소로 넘어갈 때, 정렬을 초기화 */
+        text-align: left;
+        margin-left: 10px;
+        margin-bottom: 5px;
+        height: fit-content;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="space"></div>
+    <form id="chat">
+      <input type="text" id="message" placeholder="채팅을 입력하세요" />
+      <button>채팅</button>
+    </form>
+    <script>
+      //내가 보낸 건 오른쪽. 남이 보낸 건 왼쪽으로!!
+      const chatForm = document.querySelector('#chat');
+      const space = document.querySelector('#space');
+      const socket = io();
+      const chatroom = prompt('채팅방을 입력하세요: ');
+      socket.emit('join', chatroom);
+
+      socket.on('userjoin', (message) => {
+        console.log(message);
+      });
+      socket.on('chat', (data) => {
+        const messageContainer = document.createElement('div');
+        const p = document.createElement('p');
+        p.textContent = data.message;
+
+        if (socket.id === data.senderId) {
+          messageContainer.classList.add('myMsg');
+        } else {
+          messageContainer.classList.add('anotherMsg');
+        }
+
+        messageContainer.appendChild(p);
+        space.appendChild(messageContainer);
+      });
+
+      chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const msg = chatForm.querySelector('#message');
+        socket.emit('message', msg.value);
+        msg.value = '';
+      });
+    </script>
+  </body>
+</html>
