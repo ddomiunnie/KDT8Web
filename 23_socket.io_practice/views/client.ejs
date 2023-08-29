@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <h1>Hello World!</h1>
+    <button id="hello">hello</button>
+    <button id="study">study</button>
+    <button id="bye">bye</button>
+    <div id="response"></div> -->
+    <h1>Hello World</h1>
+    <button onclick="hello()">Hello</button>
+    <button onclick="study()">Study</button>
+    <button onclick="bye()">Bye</button>
+    <p id="from-data"></p>
+
+    <script>
+      const socket = io();
+      const data = document.querySelector('#from-data');
+      // button event
+      //   document.getElementById('hello').addEventListener('click', () => {
+      //     socket.emit('hello');
+      //   });
+
+      //   document.getElementById('study').addEventListener('click', () => {
+      //     socket.emit('study');
+      //   });
+
+      //   document.getElementById('bye').addEventListener('click', () => {
+      //     socket.emit('bye');
+      //   });
+
+      //   socket.on('response', (message) => {
+      //     const responseDiv = document.getElementById('response');
+      //     responseDiv.innerHTML = `client : ${message}`;
+      //   });
+
+      function hello() {
+        socket.emit('hello', { name: 'client', message: 'hello' });
+        socket.on('cbHello', (res) => {
+          msg(res);
+        });
+      }
+      function study() {
+        socket.emit('study', { name: 'client', message: 'study' });
+        socket.on('cbStudy', (res) => {
+          msg(res);
+        });
+      }
+      function bye() {
+        socket.emit('bye', { name: 'client', message: 'bye' });
+        socket.on('cbBye', (res) => {
+          msg(res);
+        });
+      }
+
+      function msg(res) {
+        data.textContent = `${res.name} : ${res.message}`;
+      }
+    </script>
+  </body>
+</html>
