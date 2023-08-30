@@ -46,6 +46,14 @@
         margin-left: 10px;
         border-radius: 10px;
       }
+      #notice {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+      #notice p {
+        margin: 0;
+      }
     </style>
   </head>
   <body>
@@ -90,7 +98,7 @@
         lists.textContent = '';
         roomLists.forEach((roomList) => {
           const li = document.createElement('li');
-          li.textContent = `${roomList} 와 닉네임 입력 후 입장`;
+          li.textContent = `${roomList} 와(과) 닉네임 입력 후 입장`;
           lists.appendChild(li);
         });
       });
@@ -106,30 +114,24 @@
         }
         lists.innerHTML = options;
       });
-
       //메세지 띄우기
       socket.on('newMessage', (message, nick) => {
-        console.log(message, nick);
         const div = document.createElement('div'); //밖div
         const p = document.createElement('p'); //안쪽p
-        console.log('닉', myName);
         if (myName === nick) {
           div.classList.add('my-chat');
         } else {
           div.classList.add('other-chat');
         }
         //채팅텍스트
-        p.textContent = message;
+        p.textContent = `${nick}:${message}`;
         div.appendChild(p);
         msg.appendChild(div);
       });
-
-      //입장 메시지 이벤트
+      //입장 메세지 이벤트
       socket.on('notice', (message) => {
-        console.log(message);
         const div = document.createElement('div');
         const p = document.createElement('p');
-
         p.textContent = message;
         div.appendChild(p);
         notice.appendChild(div);
