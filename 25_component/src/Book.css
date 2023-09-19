@@ -1,0 +1,23 @@
+.main {
+  color: yellow;
+  font-size: 40px;
+}
+
+.book {
+  width: 150px;
+  height: 170px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 20px;
+}
+.back {
+  display: flex; /* 부모 엘리먼트를 플렉스 컨테이너로 설정 */
+  flex-direction: column; /* 자식 엘리먼트들을 세로로 배치하도록 설정 */
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  background-color: lightpink;
+  width: 100%; /* 부모 엘리먼트의 너비를 100%로 설정하여 가로로 확장되도록 합니다. */
+  height: 100vh; /* 화면 높이를 기준으로 부모 엘리먼트의 높이를 설정합니다. */
+}

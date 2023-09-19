@@ -1,0 +1,49 @@
+div {
+  width: 80px;
+  height: 80px;
+  border-radius: 50px;
+  position: absolute;
+}
+.body_1 {
+  background-color: coral;
+}
+.body_2 {
+  background-color: lightcoral;
+  top: 30px;
+  left: 60px;
+  z-index: 2;
+}
+.body_3 {
+  background-color: lightyellow;
+  top: 60px;
+  left: 90px;
+  z-index: 3;
+}
+.body_4 {
+  background-color: lightgreen;
+  top: 60px;
+  left: 130px;
+  z-index: 4;
+}
+.body_5 {
+  background-color: lightblue;
+  top: 60px;
+  left: 180px;
+  z-index: 6;
+}
+.eye_black {
+  width: 15px;
+  height: 15px;
+  background-color: black;
+  top: 20px;
+  left: 20px;
+  z-index: 3;
+}
+.eye_white {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  top: 15px;
+  left: 20px;
+  z-index: 2;
+}
