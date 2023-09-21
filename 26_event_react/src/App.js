@@ -3,8 +3,10 @@
 //import ShowMessage from './ShowMessage';
 //import Counter from './Counter';
 //import Color from './Color';
-import Disapper from './Disapper';
+//import Disapper from './Disapper';
 //import Class from './Class';
+//import Board from './Board';
+import ClassState4 from './ClassState4';
 
 function App() {
   return (
@@ -13,8 +15,10 @@ function App() {
       <EventClass /> */}
       {/* <ShowMessage message={'안녕하세요'} /> */}
       {/* <Color /> */}
-      <Disapper />
+      {/* <Disapper /> */}
       {/* <Class /> */}
+      {/* <Board /> */}
+      <ClassState4 />
     </>
   );
 }
