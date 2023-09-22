@@ -3,7 +3,8 @@
 //import Color from './Color';
 //import Disapper from './Disapper';
 //import Board from './Board';
-import Search from './Search';
+//import Search from './Search';
+import Todo from './Todo';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       {/* <Color /> */}
       {/* <Disapper /> */}
       {/* <Board /> */}
-      <Search />
+      {/* <Search /> */}
+      <Todo />
     </>
   );
 }
