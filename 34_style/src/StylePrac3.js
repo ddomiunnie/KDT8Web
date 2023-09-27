@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
-// 스타일 컴포넌트 정의
-const Button = styled.button`
-  background-color: ${(props) => (props.active ? 'red' : 'blue')};
-  color: ${(props) => (props.active ? 'black' : 'white')};
+const _StyledButton = styled.button`
+  background-color: ${(props) => (props.isClicked ? 'red' : 'blue')};
+  color: ${(props) => (props.isClicked ? 'black' : 'white')};
+  cursor: pointer;
+  padding: 10px;
 `;
 
 export default function StylePrac3() {
-  const [active, setActive] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
-  // 버튼을 클릭할 때 호출되는 함수
-  const handleClick = () => {
-    setActive(!active);
+  const onClick = () => {
+    setIsClicked(!isClicked);
   };
 
   return (
-    <div>
-      <Button active={active} onClick={handleClick}>
-        <p>색상변경!</p>
-      </Button>
-    </div>
+    <>
+      <_StyledButton onClick={onClick} isClicked={isClicked}>
+        색상변경
+      </_StyledButton>
+    </>
   );
 }
